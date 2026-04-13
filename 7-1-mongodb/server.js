@@ -185,20 +185,49 @@
  */
 
 // import mongoose
+import mongoose from "mongoose";
 
+// Replace with your actual username, password, and DB name
+const uri = "mongodb+srv://s202270420:Mmm13579_gama@cluster0.jyahhls.mongodb.net/?appName=Cluster0";
+
+mongoose.connect(uri)
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch(err => console.log("❌ Connection error:", err));
 // establish connection
 
 
 // define schema
+const studentSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  major: String
+});
 
+const Student = mongoose.model("Student", studentSchema);
 
 // create document
-
+async function createStudents() {
+  await Student.insertMany([
+    { name: "Ali", age: 21, major: "CS" },
+    { name: "Sara", age: 23, major: "SE" }
+  ]);
+  console.log("✅ Inserted");
+}
 
 // read document
-
+async function readStudents() {
+  const all = await Student.find();
+  console.log("📄 All Students:", all);
+}
 
 // update document
-
+async function updateStudent() {
+  await Student.updateOne({ name: "Ali" }, { age: 22 });
+  console.log("✅ Updated Ali");
+}
 
 // delete document
+async function deleteStudent() {
+  await Student.deleteOne({ name: "Sara" });
+  console.log("✅ Deleted Sara");
+}
