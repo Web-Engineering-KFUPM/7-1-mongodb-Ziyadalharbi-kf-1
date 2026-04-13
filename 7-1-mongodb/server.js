@@ -193,10 +193,8 @@ const uri = "mongodb+srv://s202270420:Mmm13579_gama@cluster0.jyahhls.mongodb.net
 mongoose.connect(uri)
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch(err => console.log("❌ Connection error:", err));
-// establish connection
 
-
-// define schema
+// ✅ 2. Define schema & model
 const studentSchema = new mongoose.Schema({
   name: String,
   age: Number,
@@ -205,7 +203,8 @@ const studentSchema = new mongoose.Schema({
 
 const Student = mongoose.model("Student", studentSchema);
 
-// create document
+
+// ✅ 3. Create documents
 async function createStudents() {
   await Student.insertMany([
     { name: "Ali", age: 21, major: "CS" },
@@ -214,20 +213,35 @@ async function createStudents() {
   console.log("✅ Inserted");
 }
 
-// read document
+
+// ✅ 4. Read documents
 async function readStudents() {
-  const all = await Student.find();
-  console.log("📄 All Students:", all);
+  const students = await Student.find();
+  console.log("📄 Students:", students);
 }
 
-// update document
+
+// ✅ 5. Update document
 async function updateStudent() {
   await Student.updateOne({ name: "Ali" }, { age: 22 });
   console.log("✅ Updated Ali");
 }
 
-// delete document
+
+// ✅ 6. Delete document
 async function deleteStudent() {
   await Student.deleteOne({ name: "Sara" });
   console.log("✅ Deleted Sara");
 }
+
+
+// ✅ Run everything
+async function run() {
+  await createStudents();
+  await readStudents();
+  await updateStudent();
+  await deleteStudent();
+  await readStudents();
+}
+
+run();
